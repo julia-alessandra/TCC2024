@@ -93,4 +93,12 @@ public class MetaTempoHistoricoDAO {
         List<MetaTempoHistorico> lista = q.getResultList();
         return lista;
     }
+    public List<MetaTempoHistorico> listar(MetaTempoHistorico historico) {
+        CriteriaBuilder cBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<MetaTempoHistorico> cq = cBuilder.createQuery(MetaTempoHistorico.class);
+        Root<MetaTempoHistorico> root = cq.from(MetaTempoHistorico.class);
+        Join<MetaTempoHistorico, MetaTempo> join = root.join("historicos");
+        cq.where(cBuilder.equal(join.get("id"), historico.getId()));
+        return em.createQuery(cq).getResultList();
+    }
 }

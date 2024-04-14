@@ -4,6 +4,7 @@
  */
 package com.mycompany.tcc.dados;
 
+import java.util.ArrayList;
 import javax.persistence.*;
 
 /**
@@ -17,6 +18,7 @@ public class MetaItem extends Meta {
     private int id;
     private int qnt;
     private int qntCompleta;
+    private ArrayList<Item> itens;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +48,24 @@ public class MetaItem extends Meta {
     public void setQntCompleta(int qntCompleta) {
         this.qntCompleta = qntCompleta;
     }
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name = "meta_item",
+            joinColumns={@JoinColumn(name="id_meta_item")},
+            inverseJoinColumns={@JoinColumn(name="id_item")})
+    public ArrayList<Item> getItens() {
+        return itens;
+    }
 
+    public void setItens(ArrayList<Item> item) {
+        this.itens = item;
+    }
+    
+    public void addItem(Item item) {
+        if(item != null)
+            this.itens.add(item);
+    }
+    
+    public void removeItem(Item item) {
+        this.itens.remove(item);
+    }
 }

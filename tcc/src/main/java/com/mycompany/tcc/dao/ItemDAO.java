@@ -97,4 +97,12 @@ public class ItemDAO {
         List<Item> lista = q.getResultList();
         return lista;
     }
+    public List<Item> listar(Item item) {
+        CriteriaBuilder cBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<Item> cq = cBuilder.createQuery(Item.class);
+        Root<Item> root = cq.from(Item.class);
+        Join<Item, MetaItem> join = root.join("itens");
+        cq.where(cBuilder.equal(join.get("id"), item.getId()));
+        return em.createQuery(cq).getResultList();
+    }
 }

@@ -70,6 +70,7 @@ public class MetaDAO {
             m.setDataFinal(metaI.getDataFinal());
             m.setEstado(metaI.getEstado());
             m.setDescricao(metaI.getDescricao());
+            m.setItens(metaI.getItens());
 
             m.setQnt(metaI.getQnt());
             m.setQntCompleta(metaI.getQntCompleta());
@@ -87,6 +88,7 @@ public class MetaDAO {
             m.setDataFinal(metaT.getDataFinal());
             m.setEstado(metaT.getEstado());
             m.setDescricao(metaT.getDescricao());
+            m.setHistoricos(metaT.getHistoricos());
 
             m.setObjetivoDiario(metaT.getObjetivoDiario());
             
@@ -145,5 +147,21 @@ public class MetaDAO {
         TypedQuery<MetaTempo> q = em.createQuery("SELECT m FROM MetaTempo m", MetaTempo.class);
         List<MetaTempo> lista = q.getResultList();
         return lista;
+    }
+    public List<MetaItem> listar(Item item) {
+        CriteriaBuilder cBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<MetaItem> cq = cBuilder.createQuery(MetaItem.class);
+        Root<MetaItem> root = cq.from(MetaItem.class);
+        Join<MetaItem, Item> join = root.join("itens");
+        cq.where(cBuilder.equal(join.get("id"), item.getId()));
+        return em.createQuery(cq).getResultList();
+    }
+    public List<MetaTempoHistorico> listar(MetaTempoHistorico historico) {
+        CriteriaBuilder cBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<MetaTempoHistorico> cq = cBuilder.createQuery(MetaTempoHistorico.class);
+        Root<MetaTempoHistorico> root = cq.from(MetaTempoHistorico.class);
+        Join<MetaTempoHistorico, Item> join = root.join("historicos");
+        cq.where(cBuilder.equal(join.get("id"), historico.getId()));
+        return em.createQuery(cq).getResultList();
     }
 }
