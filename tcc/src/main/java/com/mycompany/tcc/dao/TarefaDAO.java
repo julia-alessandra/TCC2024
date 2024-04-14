@@ -86,7 +86,7 @@ public class TarefaDAO {
         var cBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Tarefa> c = cBuilder.createQuery(Tarefa.class);
         var root = c.from(Tarefa.class);
-        c.select(root).where(cBuilder.equal(root.get("id_user_usuario"), usuario.getId()));
+        c.select(root).where(cBuilder.equal(root.get("usuario"), usuario));
 
         List<Tarefa> tarefas = em.createQuery(c).getResultList();
         em.close();
@@ -97,7 +97,7 @@ public class TarefaDAO {
         var cBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Tarefa> c = cBuilder.createQuery(Tarefa.class);
         var root = c.from(Tarefa.class);
-        c.select(root).where(cBuilder.equal(root.get("id_rotina_rotina"), rotina.getId()));
+        c.select(root).where(cBuilder.equal(root.get("rotina"), rotina));
 
         List<Tarefa> tarefas = em.createQuery(c).getResultList();
         em.close();
@@ -108,7 +108,7 @@ public class TarefaDAO {
         var cBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Tarefa> c = cBuilder.createQuery(Tarefa.class);
         var root = c.from(Tarefa.class);
-        c.select(root).where(cBuilder.like(root.get("data_tarefa"), "%" + data + "%"));
+        c.select(root).where(cBuilder.like(root.get("data"), "%" + data + "%"));
 
         List<Tarefa> tarefas = em.createQuery(c).getResultList();
         em.close();
@@ -131,6 +131,7 @@ public class TarefaDAO {
     }
     
     public static void main(String[] args) {
+        // testes
         EntityManagerFactory emft = Persistence.createEntityManagerFactory("com.mycompany_tcc_jar_1.0-SNAPSHOTPU");
         EntityManager emt = emft.createEntityManager();
         TarefaDAO dao = new TarefaDAO();
@@ -138,24 +139,18 @@ public class TarefaDAO {
         emt.getTransaction().begin();
         Usuario u = emt.find(Usuario.class, "userfake");
         emt.getTransaction().commit();
-        
-        emt.getTransaction().begin();
-        Categoria c = emt.find(Categoria.class, 1);
-        emt.getTransaction().commit();
-        
-        emt.getTransaction().begin();
+//        emt.getTransaction().begin();
+//        Categoria c = emt.find(Categoria.class, 1);
+//        emt.getTransaction().commit();
+        emt.getTransaction().begin();;
         Rotina r = emt.find(Rotina.class, 1);
         emt.getTransaction().commit();
         
-        Tarefa t = new Tarefa();
-        t.setUsuario(u);
-        t.setRotina(r);
-        t.setId(1);
-        t.setDescricao("teste desc");
-        t.setNome("nome tarefa");
+        List<Tarefa> list = dao.pesquisarRotina(r);
+        for(int i = 0; i < list.size(); i++){
+            System.out.println(list.get(i).getId());
+        }
         
-        System.out.println("Até aqui tudo certo 1111");
-        dao.inserir(t);
         System.out.println("Funcionou");
     }
 }
