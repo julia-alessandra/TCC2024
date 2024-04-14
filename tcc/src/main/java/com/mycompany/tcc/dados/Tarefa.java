@@ -5,25 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
-/**
- *
- * @author Pedro Gabriel
- */
+
 @Entity
-@Table(name = "rotina")
-public class Rotina {
+@Table(name = "tarefa")
+public class Tarefa {
+    
     private int id;
     private String nome;
     private String descricao;
-    private String cor;
-    private int quantTarefas;
+    private String data;
+    private String horario;
+    private Rotina rotina;
     private Usuario usuario;
     private ArrayList<Categoria> categorias;
 
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_rotina")
+    @Column(name = "id_tarefa")
     public int getId() {
         return id;
     }
@@ -31,8 +29,8 @@ public class Rotina {
     public void setId(int id) {
         this.id = id;
     }
-
-    @Column(name = "nm_rotina")
+    
+    @Column(name = "nm_tarefa")
     public String getNome() {
         return nome;
     }
@@ -40,8 +38,8 @@ public class Rotina {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    @Column(name = "desc_rotina")
+    
+    @Column(name = "desc_tarefa")
     public String getDescricao() {
         return descricao;
     }
@@ -50,22 +48,22 @@ public class Rotina {
         this.descricao = descricao;
     }
 
-    @Column(name = "cor")
-    public String getCor() {
-        return cor;
+    @Column(name = "data_tarefa")
+    public String getData() {
+        return data;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
+    public void setData(String data) {
+        this.data = data;
     }
 
-    @Column(name = "quantidade_tarefa")
-    public int getQuantTarefas() {
-        return quantTarefas;
+    @Column(name = "horario_tarefa")
+    public String getHorario() {
+        return horario;
     }
 
-    public void setQuantTarefas(int quantTarefas) {
-        this.quantTarefas = quantTarefas;
+    public void setHorario(String horario) {
+        this.horario = horario;
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
@@ -78,9 +76,19 @@ public class Rotina {
         this.usuario = usuario;
     }
 
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="id_rotina_rotina", nullable = false)
+    public Rotina getRotina() {
+        return rotina;
+    }
+
+    public void setRotina(Rotina rotina) {
+        this.rotina = rotina;
+    }
+
     @ManyToMany(fetch=FetchType.EAGER)
-    @JoinTable(name = "categoria_rotina",
-            joinColumns={@JoinColumn(name="id_rotina_rotina")},
+    @JoinTable(name = "categoria_tarefa",
+            joinColumns={@JoinColumn(name="id_tarefa_tarefa")},
             inverseJoinColumns={@JoinColumn(name="id_categoria_categoria")})
     public ArrayList<Categoria> getCategorias() {
         return categorias;
@@ -89,5 +97,6 @@ public class Rotina {
     public void setCategorias(ArrayList<Categoria> categorias) {
         this.categorias = categorias;
     }
+    
     
 }
