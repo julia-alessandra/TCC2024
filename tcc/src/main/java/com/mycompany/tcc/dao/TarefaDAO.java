@@ -126,31 +126,12 @@ public class TarefaDAO {
         CriteriaQuery<Tarefa> cq = cBuilder.createQuery(Tarefa.class);
         Root<Tarefa> root = cq.from(Tarefa.class);
         Join<Tarefa, Categoria> join = root.join("categorias");
-        cq.where(cBuilder.equal(join.get("id_categoria_categoria"), categoria.getId()));
+        cq.where(cBuilder.equal(join.get("id"), categoria.getId()));
         return em.createQuery(cq).getResultList();
     }
     
     public static void main(String[] args) {
         // testes
-        EntityManagerFactory emft = Persistence.createEntityManagerFactory("com.mycompany_tcc_jar_1.0-SNAPSHOTPU");
-        EntityManager emt = emft.createEntityManager();
-        TarefaDAO dao = new TarefaDAO();
         
-        emt.getTransaction().begin();
-        Usuario u = emt.find(Usuario.class, "userfake");
-        emt.getTransaction().commit();
-//        emt.getTransaction().begin();
-//        Categoria c = emt.find(Categoria.class, 1);
-//        emt.getTransaction().commit();
-        emt.getTransaction().begin();;
-        Rotina r = emt.find(Rotina.class, 1);
-        emt.getTransaction().commit();
-        
-        List<Tarefa> list = dao.pesquisarRotina(r);
-        for(int i = 0; i < list.size(); i++){
-            System.out.println(list.get(i).getId());
-        }
-        
-        System.out.println("Funcionou");
     }
 }

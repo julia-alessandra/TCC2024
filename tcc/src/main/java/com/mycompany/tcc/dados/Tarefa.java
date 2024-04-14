@@ -109,4 +109,13 @@ public class Tarefa {
     }
     
     
+    public void addCategoria(Categoria categoria) {
+        if(categoria != null)
+            this.categorias.add(categoria);
+    }
+    
+    public void removeCategoria(Categoria categoria) {
+        this.categorias.remove(categoria);
+    }
+    
 }

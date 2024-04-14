@@ -90,4 +90,13 @@ public class Rotina {
         this.categorias = categorias;
     }
     
+    public void addCategoria(Categoria categoria) {
+        if(categoria != null)
+            this.categorias.add(categoria);
+    }
+    
+    public void removeCategoria(Categoria categoria) {
+        this.categorias.remove(categoria);
+    }
+    
 }
