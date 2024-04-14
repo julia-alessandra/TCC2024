@@ -10,12 +10,12 @@ import javax.persistence.*;
  *
  * @author Pedro Gabriel
  */
-public class RotinaDAO {
-    public void inserir(Rotina rotina) {
+public class CategoriaDAO {
+    public void inserir(Categoria categoria) {
         
     }
     
-    public void atualizar(Rotina rotina) {
+    public void atualizar(Categoria categoria) {
         
     }
     
@@ -23,27 +23,27 @@ public class RotinaDAO {
         
     }
     
-    public Rotina selecionar(int id) {
+    public Categoria selecionar(int id) {
         return null;
     }
     
-    public ArrayList<Rotina> pesquisarNome(String txt) {
+    public ArrayList<Categoria> pesquisarNome(String txt) {
         return null;
     }
     
-    public ArrayList<Rotina> pesquisarUsuario(Usuario usuario) {
+    public ArrayList<Categoria> pesquisarUsuario(Usuario usuario) {
         return null;
     }
     
-    public ArrayList<Rotina> pesquisarCor(String cor) {
+    public ArrayList<Categoria> listar() {
         return null;
     }
     
-    public ArrayList<Rotina> listar() {
+    public ArrayList<Categoria> listar(Rotina rotina) {
         return null;
     }
     
-    public ArrayList<Rotina> listar(Categoria categoria) {
+    public ArrayList<Categoria> listar(Tarefa tarefa) {
         return null;
     }
 }
