@@ -15,6 +15,7 @@ public class Tarefa {
     private String descricao;
     private String data;
     private String horario;
+    private String periodicidade;
     private Rotina rotina;
     private Usuario usuario;
     private ArrayList<Categoria> categorias;
@@ -96,6 +97,15 @@ public class Tarefa {
 
     public void setCategorias(ArrayList<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    @Column(name = "periodicidade")
+    public String getPeriodicidade() {
+        return periodicidade;
+    }
+
+    public void setPeriodicidade(String periodicidade) {
+        this.periodicidade = periodicidade;
     }
     
     
