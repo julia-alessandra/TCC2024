@@ -10,20 +10,20 @@ import java.util.List;
  *
  * @author Master
  */
-public class GrupoDAO {
+public class PostagemDAO {
 
     private EntityManagerFactory emf;
     private EntityManager em;
 
-    public GrupoDAO() {
+    public PostagemDAO() {
         emf = Persistence.createEntityManagerFactory("com.mycompany_tcc_jar_1.0-SNAPSHOTPU");
         em = emf.createEntityManager();
     }
 
-    public void inserir(Grupo grupo) {
+    public void inserir(Postagem postagem) {
         try {
             em.getTransaction().begin();
-            em.persist(grupo);
+            em.persist(postagem);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -35,30 +35,29 @@ public class GrupoDAO {
         }
     }
 
-    public void atualizar(Grupo grupo) {
+    public void atualizar(Postagem postagem) {
         em.getTransaction().begin();
-        Grupo g = em.find(Grupo.class, grupo.getId());
+        Postagem g = em.find(Postagem.class, postagem.getId());
 
-        g.setId(grupo.getId());
-        g.setNome(grupo.getNome());
-        g.setDescricao(grupo.getDescricao());
-        em.merge(grupo);
+        g.setId(postagem.getId());
+        g.setConteudo(postagem.getConteudo());
+        em.merge(postagem);
         em.getTransaction().commit();
         em.close();
     }
 
     public void deletar(int id) {
         em.getTransaction().begin();
-        Grupo i = em.find(Grupo.class, id);
+        Postagem i = em.find(Postagem.class, id);
         em.remove(i);
 
         em.getTransaction().commit();
         em.close();
     }
 
-    public Grupo selecionar(int id) {
+    public Postagem selecionar(int id) {
         em.getTransaction().begin();
-        Grupo i = em.find(Grupo.class, id);
+        Postagem i = em.find(Postagem.class, id);
         em.getTransaction().commit();
         em.close();
 
