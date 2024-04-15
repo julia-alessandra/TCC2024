@@ -43,7 +43,7 @@ public class UsuarioDAO {
         em.close();
     }
     
-    public void apagar(int id) {
+    public void apagar(String id) {
         em.getTransaction().begin();
         Usuario u = em.find(Usuario.class, id);
         em.remove(u);

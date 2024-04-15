@@ -42,7 +42,7 @@ public class InteracoesComOSistema {
                 case 2:
                     System.out.println("Digite o id:");
                     String id2 = scan.nextLine();
-                    dao.remover(id2);
+                    dao.apagar(id2);
                     break;
                 case 3:
                     System.out.println("Digite o id:");

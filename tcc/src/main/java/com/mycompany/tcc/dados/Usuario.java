@@ -11,6 +11,7 @@ public class Usuario {
     private String nome;
     private String bio;
     private int pontuacao;
+    private List<Grupo> grupos;
     
     public Usuario(String nome, String bio, int pontuacao) {
         this.nome = nome;
@@ -60,5 +61,13 @@ public class Usuario {
     public void setId(String id) {
         this.id = id;
     }
+
+    public List<Grupo> getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(List<Grupo> grupos) {
+        this.grupos = grupos;
+    }  
  
 }
