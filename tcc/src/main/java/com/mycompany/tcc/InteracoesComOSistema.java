@@ -35,7 +35,7 @@ public class InteracoesComOSistema {
                     System.out.println("Digite a bio:");
                     String bio1 = scan.nextLine();
                     System.out.println("Digite a pontuação:");
-                    String pontuacao1 = scan.nextLine();
+                    int pontuacao1 = scan.nextInt();
                     Usuario user1 = new Usuario(nome1, bio1, pontuacao1);
                     dao.inserir(user1);
                     break;
@@ -52,7 +52,7 @@ public class InteracoesComOSistema {
                     System.out.println("Digite a bio:");
                     String bio3 = scan.nextLine();
                     System.out.println("Digite a pontuação:");
-                    String pontuacao3 = scan.nextLine();
+                    int pontuacao3 = scan.nextInt();
                     Usuario user3 = new Usuario(id3, nome3, bio3, pontuacao3);
                     dao.inserir(user3);
                     break;
