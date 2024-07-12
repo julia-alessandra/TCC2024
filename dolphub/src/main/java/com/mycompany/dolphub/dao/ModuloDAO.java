@@ -3,7 +3,7 @@ package com.mycompany.dolphub.dao;
 
 /**
  *
- * @author Pedro Gabriel
+ * @author exoticlucas
  */
 public class ModuloDAO {
     
