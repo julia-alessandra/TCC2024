@@ -22,7 +22,6 @@ public class Usuario {
             inverseJoinColumns={@JoinColumn(name="id_curso_curso")})
     private ArrayList<Curso> cursos;
     
-    
     public int getId() {
         return id;
     }
