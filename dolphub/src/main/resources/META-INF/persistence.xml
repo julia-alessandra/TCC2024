@@ -3,6 +3,7 @@
   <persistence-unit name="com.mycompany_dolphub_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.mycompany.dolphub.dto.Usuario</class>
+    <class>com.mycompany.dolphub.dto.Curso</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/tcc2024plataformacursoBD"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

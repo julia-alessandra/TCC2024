@@ -79,6 +79,7 @@ public class Curso {
         this.usuarios = usuarios;
     }
 
+
     public ArrayList<Modulo> getModulos() {
         return modulos;
     }
