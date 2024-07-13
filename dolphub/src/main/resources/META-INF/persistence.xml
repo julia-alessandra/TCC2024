@@ -4,6 +4,11 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.mycompany.dolphub.dto.Usuario</class>
     <class>com.mycompany.dolphub.dto.Curso</class>
+    <class>com.mycompany.dolphub.dto.Questao</class>
+    <class>com.mycompany.dolphub.dto.Atividade</class>
+    <class>com.mycompany.dolphub.dto.Modulo</class>
+    <class>com.mycompany.dolphub.dto.Professor</class>
+    <class>com.mycompany.dolphub.dto.Aula</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/tcc2024plataformacursoBD"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

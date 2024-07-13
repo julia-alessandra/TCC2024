@@ -1,6 +1,8 @@
 
 package com.mycompany.dolphub;
 
+import com.mycompany.dolphub.dto.Questao;
+
 /**
  *
  * @author Pedro Gabriel
