@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 public class Curso {
     @Id
-    @GeneratedValue(Strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_curso")
     private int id;
     
@@ -31,13 +31,13 @@ public class Curso {
     private ArrayList<Usuario> usuarios;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    JoinColumn(name = "id_professor_professor", nullable = false)
+    @JoinColumn(name = "id_professor_professor", nullable = false)
     public Professor professor;
     
     @OneToMany(fetch = FetchType.EAGER,
             cascade = CascadeType.PERSIST,
             mappedBy = "curso")
-    public ArrayList<Modulo> modulos;
+    public List<Modulo> modulos;
     
     public int getId() {
         return id;
@@ -80,7 +80,7 @@ public class Curso {
     }
 
 
-    public ArrayList<Modulo> getModulos() {
+    public List<Modulo> getModulos() {
         return modulos;
     }
 

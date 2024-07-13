@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 public class Modulo {
     @Id
-    @GeneratedValue(Strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_modulo")
     private int id;
     
@@ -24,7 +24,7 @@ public class Modulo {
     @Column(name = "descricao_modulo")
     private String descricao;
     
-    ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_curso_curso", nullable = false)
     public Curso curso;
     
