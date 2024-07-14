@@ -18,13 +18,14 @@ public class Questao {
     private String tags;
 
     @ManyToMany(mappedBy = "questoes")
-    public List<Atividade> atividades;
+    private List<Atividade> atividades;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "historico_questao",
             joinColumns = {@JoinColumn(name = "id_questao")},
             inverseJoinColumns = {@JoinColumn(name = "id_usuario")})
-
+    private List<Usuario> usuarios;
+    
     public int getId() {
         return id;
     }
@@ -47,6 +48,22 @@ public class Questao {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public List<Atividade> getAtividades() {
+        return atividades;
+    }
+
+    public void setAtividades(List<Atividade> atividades) {
+        this.atividades = atividades;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 
 }
