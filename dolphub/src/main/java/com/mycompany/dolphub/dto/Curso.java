@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 public class Curso {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_curso")
     private int id;
     

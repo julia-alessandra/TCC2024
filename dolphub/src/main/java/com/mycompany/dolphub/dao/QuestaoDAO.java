@@ -1,35 +1,31 @@
 package com.mycompany.dolphub.dao;
 
 import com.mycompany.dolphub.dto.Questao;
-import java.text.ParseException;
-import java.util.Scanner;
-import javax.persistence.*;
+import java.util.List;
 
-/**
- *
- * @author Julia
- */
+import javax.persistence.*;
+import java.util.Scanner;
+import javax.persistence.criteria.*;
+
 public class QuestaoDAO {
 
-    public static void inserirQuestao(Questao questao) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("persistence");
+    public static void inserir(Questao questao) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(questao);
             entityManager.getTransaction().commit();
-            System.out.println("Questão inserida com sucesso!");
+            System.out.println("Questão criada com sucesso!");
         } catch (Exception ex) {
-            System.err.println("Erro ao inserir a questão: ");
-
+            System.err.println("Erro ao criar a questão");
         } finally {
             entityManager.close();
         }
     }
 
-    public static void excluirQuestao(int idQuestao) {
-        EntityManagerFactory entityManagerFactory
-                = Persistence.createEntityManagerFactory("persistence");
+    public static void remover(int idQuestao) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
@@ -38,48 +34,61 @@ public class QuestaoDAO {
                 entityManager.remove(questao);
                 System.out.println("Questão excluída com sucesso!");
             } else {
-                System.out.println("Não foi possível encontrar a questão indicada");
+                System.out.println("Não foi possível encontrar a questão");
             }
             entityManager.getTransaction().commit();
         } catch (Exception ex) {
-            entityManager.getTransaction().rollback();
-            System.err.println("Erro ao excluir a questão: " + ex.getMessage());
-            ex.printStackTrace();
+            System.err.println("Erro ao excluir a questão");
         } finally {
             entityManager.close();
         }
     }
 
-    public static void main(String args[]) {
+    public static void exibirQuestoes() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaQuery<Questao> criteria = entityManager.getCriteriaBuilder().createQuery(Questao.class);
+        criteria.select(criteria.from(Questao.class));
+        List<Questao> questoes = entityManager.createQuery(criteria).getResultList();
+        for (Questao questao : questoes) {
+       System.out.println("Id: " + questao.getId() + "\nComando: " + questao.getComando() + "\nTags: " + questao.getTags());
+        entityManager.close();
+    }}
+
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcao = 0;
         do {
-            System.out.println("***SISTEMA DE GERENCIAMENTO DE QUESTÕES***");
             System.out.println(" DIGITE:\n"
-                    + " 1 - Para Cadastrar Questão\n"
+                    + " 1 - Para criar novas questões\n"
                     + " 2 - Excluir Questão\n"
-                    + " 3 - Para Sair\n");
+                    + " 3 - Exibir questões\n"
+                    + " 4 - Sair\n");
             opcao = scanner.nextInt();
             scanner.nextLine();
             switch (opcao) {
                 case 1: {
-                    Questao d = new Questao();
+                    Questao questao = new Questao();
                     System.out.println("Digite o comando da questão: ");
-                    d.setComando(scanner.nextLine());
-                    System.out.println("Uma tag: ");
-                    d.setTags(scanner.nextLine());
-                    QuestaoDAO.inserirQuestao(d);
+                    questao.setComando(scanner.nextLine());
+                    System.out.println("Digite a(s) tag(s) da questão: (separadas por virgula)");
+                    questao.setTags(scanner.nextLine());
+                    inserir(questao);
                     break;
                 }
-
                 case 2: {
                     System.out.println("Digite o Id da Questão: ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
-                    QuestaoDAO.excluirQuestao(id);
+                    remover(id);
+                    break;
+                }
+                case 3: {
+                    QuestaoDAO.exibirQuestoes();
                     break;
                 }
             }
-        } while (opcao != 3);
+        } while (opcao != 4);
+        scanner.close();
     }
 }

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 public class Modulo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_modulo")
     private int id;
     
@@ -30,11 +30,11 @@ public class Modulo {
     
     @OneToMany(fetch = FetchType.EAGER, cascade =
             CascadeType.PERSIST, mappedBy = "modulo")
-    private ArrayList<Atividade> atividades;
+    private List<Atividade> atividades;
     
     @OneToMany(fetch = FetchType.EAGER, cascade =
             CascadeType.PERSIST, mappedBy = "modulo")
-    private ArrayList<Aula> aulas;
+    private List<Aula> aulas;
     
     public int getId() {
         return id;
@@ -68,7 +68,7 @@ public class Modulo {
         this.descricao = descricao;
     }
 
-    public ArrayList<Atividade> getAtividades() {
+    public List<Atividade> getAtividades() {
         return atividades;
     }
 
@@ -76,11 +76,11 @@ public class Modulo {
         this.atividades = atividades;
     }
 
-    public ArrayList<Aula> getAulas() {
+    public List<Aula> getAulas() {
         return aulas;
     }
 
-    public void setAulas(ArrayList<Aula> aulas) {
+    public void setAulas(List<Aula> aulas) {
         this.aulas = aulas;
     }
     
