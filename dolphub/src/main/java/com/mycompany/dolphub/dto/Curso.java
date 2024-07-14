@@ -28,10 +28,10 @@ public class Curso {
     
     
     @ManyToMany(mappedBy="cursos")
-    private ArrayList<Usuario> usuarios;
+    private List<Usuario> usuarios;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_professor_professor", nullable = false)
+    @JoinColumn(name = "id_professor_professor")
     public Professor professor;
     
     @OneToMany(fetch = FetchType.EAGER,
@@ -71,7 +71,7 @@ public class Curso {
         this.tags = tags;
     }
 
-    public ArrayList<Usuario> getUsuarios() {
+    public List<Usuario> getUsuarios() {
         return usuarios;
     }
 
