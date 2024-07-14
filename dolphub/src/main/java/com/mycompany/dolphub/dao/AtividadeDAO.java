@@ -7,7 +7,7 @@ import javax.persistence.criteria.CriteriaQuery;
 
 public class AtividadeDAO {
 
-    public static void CriarAtividade(Atividade atividade) {
+    public static void inserir(Atividade atividade) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
@@ -22,7 +22,7 @@ public class AtividadeDAO {
         }
     }
 
-    public static void excluirAtividade(int idAtividade) {
+    public static void remover(int idAtividade) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
@@ -61,14 +61,14 @@ public class AtividadeDAO {
                     atividade.setDescricao(scanner.nextLine());
                     System.out.println("Digite a dificuldade da atividade");
                     atividade.setDificuldade(scanner.nextLine());
-                    CriarAtividade(atividade);
+                    inserir(atividade);
                     break;
                 }
                 case 2: {
                     System.out.println("Digite o Id da atividade: ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
-                    excluirAtividade(id);
+                    remover(id);
                     break;
                 }
             }
