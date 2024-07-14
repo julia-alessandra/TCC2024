@@ -51,9 +51,53 @@ public class QuestaoDAO {
         criteria.select(criteria.from(Questao.class));
         List<Questao> questoes = entityManager.createQuery(criteria).getResultList();
         for (Questao questao : questoes) {
-       System.out.println("Id: " + questao.getId() + "\nComando: " + questao.getComando() + "\nTags: " + questao.getTags());
-        entityManager.close();
-    }}
+            System.out.println("Id: " + questao.getId() + "\nComando: " + questao.getComando() + "\nTags: " + questao.getTags());
+            entityManager.close();
+        }
+    }
+
+    public Questao getQuestao(int id) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("FROM Questao AS u WHERE u.id_questao =:id ");
+            query.setParameter("id", id);
+            List<Questao> pesquisa = query.getResultList();
+            if (!pesquisa.isEmpty()) {
+                return pesquisa.get(0);
+            } else {
+                System.out.println("Usuário não encontrado");
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public static boolean atualizarQuestao(Questao questao) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+
+            entityManager.getTransaction().begin();
+            Questao persist = entityManager.find(Questao.class, questao.getId());
+
+            if (persist != null) {
+                persist.setComando(questao.getComando());
+                persist.setTags(questao.getTags());
+                entityManager.getTransaction().commit();
+            } else {
+                System.out.println("Não foi possível encontrar a questao");
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -63,7 +107,8 @@ public class QuestaoDAO {
                     + " 1 - Para criar novas questões\n"
                     + " 2 - Excluir Questão\n"
                     + " 3 - Exibir questões\n"
-                    + " 4 - Sair\n");
+                    + " 4 - Atualizar questão\n"
+                    + " 5 - Sair\n");
             opcao = scanner.nextInt();
             scanner.nextLine();
             switch (opcao) {
@@ -87,8 +132,26 @@ public class QuestaoDAO {
                     QuestaoDAO.exibirQuestoes();
                     break;
                 }
+                case 4: {
+                    int id;
+                    System.out.println("Digite o id da questao: ");
+                    id = scanner.nextInt();
+                    scanner.nextLine();
+                    Questao questao = new Questao();
+                    QuestaoDAO q = new QuestaoDAO();
+                    questao = q.getQuestao(id);
+
+                    System.out.println("Digite o novo comando da questão: ");
+                    questao.setComando(scanner.nextLine());
+
+                    System.out.println("Digite as novas tags da questão: ");
+                    questao.setTags(scanner.nextLine());
+                    
+                    atualizarQuestao(questao);
+                    System.out.println("Questão atualizada");
+                }
             }
-        } while (opcao != 4);
+        } while (opcao != 5);
         scanner.close();
     }
 }
