@@ -25,7 +25,7 @@ public class Modulo {
     private String descricao;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_curso_curso", nullable = false)
+    @JoinColumn(name = "id_curso_curso")
     public Curso curso;
     
     @OneToMany(fetch = FetchType.EAGER, cascade =
