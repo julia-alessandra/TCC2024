@@ -1,10 +1,12 @@
 package com.mycompany.dolphub.dao;
 
 import com.mycompany.dolphub.dto.*;
+import java.util.List;
 import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  * @author exoticlucas
@@ -47,8 +49,37 @@ public class ModuloDAO {
             entityManager.close();
         }
     }
+
+    public static void mostrarTodosModulo() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaQuery<Modulo> criteria = entityManager.getCriteriaBuilder().createQuery(Modulo.class);
+        criteria.select(criteria.from(Modulo.class));
+        List<Modulo> modulos = entityManager.createQuery(criteria).getResultList();
+        for (Modulo modulo : modulos) {
+            System.out.println("Id: " + modulo.getId() + "\nNome: " + modulo.getNome() + "\nDificuldade: " + modulo.getDificuldade() + "\nDescricao: " + modulo.getDescricao());
+            entityManager.close();
+        }
+    }
     
-    public static void Main(String args[]){
+    public static Modulo pesquisaIdModulo(int idModulo){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = emf.createEntityManager();
+        Modulo modulo = null;
+        try {
+            entityManager.getTransaction().begin();
+            modulo = entityManager.find(Modulo.class, idModulo);
+            entityManager.getTransaction().commit();
+            
+        } catch (Exception ex) {
+            System.err.println("Erro ao excluir modulo");
+        } finally {
+            entityManager.close();
+        }
+        return modulo;
+    }
+    
+    public static void main(String args[]) {
         Scanner scan = new Scanner(System.in);
         int opcao = 0;
         do {
@@ -65,6 +96,7 @@ public class ModuloDAO {
                     modulo.setNome(scan.nextLine());
                     System.out.println("Digite a dificuldade do modulo");
                     modulo.setDificuldade(scan.nextInt());
+                    scan.nextLine();
                     System.out.println("Digite a descricao do modulo");
                     modulo.setDescricao(scan.nextLine());
                     inserirModulo(modulo);
