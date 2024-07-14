@@ -37,7 +37,7 @@ public class Curso {
     @OneToMany(fetch = FetchType.EAGER,
             cascade = CascadeType.PERSIST,
             mappedBy = "curso")
-    public ArrayList<Modulo> modulos;
+    public List<Modulo> modulos;
     
     public int getId() {
         return id;
@@ -80,7 +80,7 @@ public class Curso {
     }
 
 
-    public ArrayList<Modulo> getModulos() {
+    public List<Modulo> getModulos() {
         return modulos;
     }
 
