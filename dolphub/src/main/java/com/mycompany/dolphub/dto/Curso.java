@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 public class Curso {
     @Id
-    @GeneratedValue(Strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_curso")
     private int id;
     
@@ -31,7 +31,7 @@ public class Curso {
     private ArrayList<Usuario> usuarios;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    JoinColumn(name = "id_professor_professor", nullable = false)
+    @JoinColumn(name = "id_professor_professor", nullable = false)
     public Professor professor;
     
     @OneToMany(fetch = FetchType.EAGER,
