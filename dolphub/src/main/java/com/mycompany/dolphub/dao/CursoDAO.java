@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  * @author exoticlucas
@@ -48,8 +49,37 @@ public class CursoDAO {
             entityManager.close();
         }
     }
-
-    public static void Main(String[] args) {
+    
+    public static void mostrarTodosModulo() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaQuery<Curso> criteria = entityManager.getCriteriaBuilder().createQuery(Curso.class);
+        criteria.select(criteria.from(Curso.class));
+        List<Curso> cursos = entityManager.createQuery(criteria).getResultList();
+        for (Curso curso : cursos) {
+            System.out.println("Id: " + curso.getId() + "\nNome: " + curso.getNomeCurso() + "\nDescricao: " + curso.getDescricao() + "\nTags: " + curso.getTags());
+            entityManager.close();
+        }
+    }
+    
+    public static Curso pesquisaIdCurso(int idCurso){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = emf.createEntityManager();
+        Curso curso = null;
+        try {   
+            entityManager.getTransaction().begin();
+            curso = entityManager.find(Curso.class, idCurso);
+            entityManager.getTransaction().commit();
+            
+        } catch (Exception ex) {
+            System.err.println("Erro ao excluir curso");
+        } finally {
+            entityManager.close();
+        }
+        return curso;
+    }
+    
+    public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int opcao = 0;
         do {
