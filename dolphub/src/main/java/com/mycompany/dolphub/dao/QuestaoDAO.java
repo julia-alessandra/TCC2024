@@ -9,7 +9,7 @@ import javax.persistence.criteria.*;
 
 public class QuestaoDAO {
 
-    public static void criarQuestao(Questao questao) {
+    public static void inserir(Questao questao) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
@@ -24,7 +24,7 @@ public class QuestaoDAO {
         }
     }
 
-    public static void excluirQuestao(int idQuestao) {
+    public static void remover(int idQuestao) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
@@ -73,14 +73,14 @@ public class QuestaoDAO {
                     questao.setComando(scanner.nextLine());
                     System.out.println("Digite a(s) tag(s) da questão: (separadas por virgula)");
                     questao.setTags(scanner.nextLine());
-                    criarQuestao(questao);
+                    inserir(questao);
                     break;
                 }
                 case 2: {
                     System.out.println("Digite o Id da Questão: ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
-                    excluirQuestao(id);
+                    remover(id);
                     break;
                 }
                 case 3: {
