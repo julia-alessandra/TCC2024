@@ -72,7 +72,7 @@ public class Modulo {
         return atividades;
     }
 
-    public void setAtividades(ArrayList<Atividade> atividades) {
+    public void setAtividades(List<Atividade> atividades) {
         this.atividades = atividades;
     }
 

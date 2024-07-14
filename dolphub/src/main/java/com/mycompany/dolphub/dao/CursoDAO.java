@@ -13,7 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
  */
 public class CursoDAO {
 
-    public static void inserirCurso(Curso curso) {
+    public void inserirCurso(Curso curso) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         EntityManager entityManager = emf.createEntityManager();
 
@@ -29,7 +29,7 @@ public class CursoDAO {
         }
     }
 
-    public static void removerCurso(int idCurso) {
+    public void removerCurso(int idCurso) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         EntityManager entityManager = emf.createEntityManager();
 
@@ -50,7 +50,7 @@ public class CursoDAO {
         }
     }
     
-    public static void mostrarTodosModulo() {
+    public void mostrarTodosModulo() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         CriteriaQuery<Curso> criteria = entityManager.getCriteriaBuilder().createQuery(Curso.class);
@@ -62,31 +62,64 @@ public class CursoDAO {
         }
     }
     
-    public static Curso pesquisaIdCurso(int idCurso){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
-        EntityManager entityManager = emf.createEntityManager();
-        Curso curso = null;
-        try {   
+    public Curso pesquisaIdCurso(int idCurso){
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
             entityManager.getTransaction().begin();
-            curso = entityManager.find(Curso.class, idCurso);
-            entityManager.getTransaction().commit();
-            
-        } catch (Exception ex) {
-            System.err.println("Erro ao excluir curso");
-        } finally {
-            entityManager.close();
+            Query query = entityManager.createQuery("FROM Curso AS u WHERE u.id_curso =:id ");
+            query.setParameter("id", entityManager);
+            List<Curso> pesquisa = query.getResultList();
+            if(!pesquisa.isEmpty()) {
+                return pesquisa.get(0);
+            } else {
+                System.out.println("Curso não encontrado");
+                return null;
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-        return curso;
+    }
+    public boolean atualizarCurso(Curso cur) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            
+            entityManager.getTransaction().begin();
+            Curso persist = entityManager.find(Curso.class, cur.getId());
+            
+            if(persist != null) {
+                persist.setNomeCurso(cur.getNomeCurso());
+                persist.setDescricao(cur.getDescricao());
+                persist.setTags(cur.getTags());
+                persist.setModulos(cur.getModulos());
+                persist.setProfessor(cur.getProfessor());
+                persist.setUsuarios(cur.getUsuarios());
+                
+                entityManager.getTransaction().commit();
+                System.out.println("Sucesso em atualizar curso");
+            } else {
+                System.out.println("Não foi possível encontrar o curso");
+                return false;
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
     }
     
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+        CursoDAO c = new CursoDAO();
         int opcao = 0;
         do {
             System.out.println(" DIGITE:\n"
                     + " 1 - Para criar novo curso\n"
                     + " 2 - Excluir curso\n"
-                    + " 3 - Para Sair\n");
+                    + " 3 - Atualizar curso\n"
+                    + " 4 - Para Sair\n");
             opcao = scan.nextInt();
             scan.nextLine();
             switch (opcao) {
@@ -98,18 +131,32 @@ public class CursoDAO {
                     curso.setDescricao(scan.nextLine());
                     System.out.println("Digite as tags do curso");
                     curso.setTags(scan.nextLine());
-                    inserirCurso(curso);
+                    c.inserirCurso(curso);
                     break;
                 }
                 case 2: {
                     System.out.println("Digite o Id do curso: ");
                     int id = scan.nextInt();
                     scan.nextLine();
-                    removerCurso(id);
+                    c.removerCurso(id);
                     break;
                 }
+                case 3: {
+                    System.out.println("Digite o Id do curso: ");
+                    Curso curso = new Curso();
+                    curso.setId(scan.nextInt());
+                    scan.nextLine();
+                    System.out.println("Digite o nome do curso");
+                    curso.setNomeCurso(scan.nextLine());
+                    System.out.println("Digite a descricao do curso");
+                    curso.setDescricao(scan.nextLine());
+                    System.out.println("Digite as tags do curso");
+                    curso.setTags(scan.nextLine());
+                    
+                    c.atualizarCurso(curso);
+                }
             }
-        } while (opcao != 3);
+        } while (opcao != 4);
         scan.close();
     }
 }
