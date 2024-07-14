@@ -34,7 +34,7 @@ public class Atividade {
     @JoinTable(name = "historico_atividade",
             joinColumns = {@JoinColumn(name = "id_atividade")},
             inverseJoinColumns = {@JoinColumn(name = "id_usuario")})
-   
+   private List<Usuario> usuarios;
 
     public int getId() {
         return id;
@@ -83,4 +83,12 @@ public class Atividade {
     public void setQuestoes(List<Questao> questoes) {
         this.questoes = questoes;
     }    
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 }

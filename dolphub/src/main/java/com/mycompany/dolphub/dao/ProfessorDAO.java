@@ -2,36 +2,32 @@
 package com.mycompany.dolphub.dao;
 
 import com.mycompany.dolphub.dto.Curso;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.mycompany.dolphub.dto.Professor;
 import java.util.List;
-import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaQuery;
-import com.mycompany.dolphub.dto.Usuario; 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
  * @author Pedro Gabriel
  */
-public class UsuarioDAO {
+public class ProfessorDAO {
     private EntityManagerFactory emf;
     private EntityManager em;
     
-    public UsuarioDAO() {
+    public ProfessorDAO() {
         emf = Persistence.createEntityManagerFactory("com.mycompany_dolphub_jar_1.0-SNAPSHOTPU");
         em = emf.createEntityManager();
     }
     
-    public boolean inserir(Usuario usuario) {
+    public boolean inserir(Professor professor) {
         try {
             
             em.getTransaction().begin();
-            em.persist(usuario);
+            em.persist(professor);
             em.getTransaction().commit();
             
         } catch (Exception e) {
@@ -45,13 +41,13 @@ public class UsuarioDAO {
         try {
             
             em.getTransaction().begin();
-            Usuario user = em.find(Usuario.class, id);
+            Professor pro = em.find(Professor.class, id);
             
-            if(user != null) {
-                em.remove(user);
+            if(pro != null) {
+                em.remove(pro);
                 em.getTransaction().commit();
             } else {
-                System.out.println("Não foi possível encontrar o usuário");
+                System.out.println("Não foi possível encontrar o professor");
                 return false;
             }
             
@@ -61,12 +57,12 @@ public class UsuarioDAO {
         return true;
     }
     
-    public boolean atualizar(Usuario user) {
+    public boolean atualizar(Professor user) {
         
         try {
             
             em.getTransaction().begin();
-            Usuario persist = em.find(Usuario.class, user.getId());
+            Professor persist = em.find(Professor.class, user.getId());
             
             if(persist != null) {
                 persist.setNome(user.getNome());
@@ -75,7 +71,7 @@ public class UsuarioDAO {
                 persist.setCurso(user.getCurso());
                 em.getTransaction().commit();
             } else {
-                System.out.println("Não foi possível encontrar o usuário");
+                System.out.println("Não foi possível encontrar o professor");
                 return false;
             }
         } catch(Exception e) {
@@ -85,14 +81,14 @@ public class UsuarioDAO {
         return true;
     }
     
-    public List<Usuario> listar() {
+    public List<Professor> listar() {
         try {
             
             em.getTransaction().begin();
-            CriteriaQuery<Usuario> criteria = em.getCriteriaBuilder().createQuery(Usuario.class);
-            criteria.select(criteria.from(Usuario.class));
-            List<Usuario> usuarios = em.createQuery(criteria).getResultList();
-            return usuarios;
+            CriteriaQuery<Professor> criteria = em.getCriteriaBuilder().createQuery(Professor.class);
+            criteria.select(criteria.from(Professor.class));
+            List<Professor> professores = em.createQuery(criteria).getResultList();
+            return professores;
             
         } catch(Exception e){
             System.out.println(e.getMessage());
@@ -100,16 +96,16 @@ public class UsuarioDAO {
         }
     }
     
-    public Usuario getUsuario(int id) {
+    public Professor getProfessor(int id) {
         try {
             em.getTransaction().begin();
-            Query query = em.createQuery("FROM Usuario AS u WHERE u.id_usuario =:id ");
+            Query query = em.createQuery("FROM Professor AS p WHERE p.id_professor =:id ");
             query.setParameter("id", id);
-            List<Usuario> pesquisa = query.getResultList();
+            List<Professor> pesquisa = query.getResultList();
             if(!pesquisa.isEmpty()) {
                 return pesquisa.get(0);
             } else {
-                System.out.println("Usuário não encontrado");
+                System.out.println("Professor não encontrado");
                 return null;
             }
         } catch(Exception e) {
@@ -121,12 +117,12 @@ public class UsuarioDAO {
     public List<Curso> getMatriculas(int id) {
         List<Curso> lista = null;
         try {
-            Usuario user = this.getUsuario(id);
+            Professor pro = this.getProfessor(id);
             em.getTransaction().begin();
-            Usuario persist = em.find(Usuario.class, user.getId());
+            Professor persist = em.find(Professor.class, pro.getId());
             
             if(persist != null) {
-                lista = persist.getCurso();
+                lista = persist.getCursosAutorais();
                 return lista;
             } else {
                 System.out.println("Não foi possível encontrar o usuário");
@@ -139,14 +135,16 @@ public class UsuarioDAO {
     }
     
     public static void main(String[] args) {
-        Usuario user = new Usuario();
-        user.setNome("eu");
-        user.setEmail("teste@gmail.com");
-        user.setData("05/07/2006");
+        ProfessorDAO dao = new ProfessorDAO();
         
-        UsuarioDAO dao = new UsuarioDAO();
+        Professor p = new Professor();
+        p.setData("ontem");
+        p.setEmail("a");
+        p.setFormacao("engenharia de pesca");
+        p.setNome("rondinely");
+        p.setTitulo("doutor");
         
-        System.out.println(dao.inserir(user));
+        dao.inserir(p);
+        
     }
-    
 }
