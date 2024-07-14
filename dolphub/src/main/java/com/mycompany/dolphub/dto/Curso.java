@@ -75,7 +75,7 @@ public class Curso {
         return usuarios;
     }
 
-    public void setUsuarios(ArrayList<Usuario> usuarios) {
+    public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
 
@@ -84,7 +84,7 @@ public class Curso {
         return modulos;
     }
 
-    public void setModulos(ArrayList<Modulo> modulos) {
+    public void setModulos(List<Modulo> modulos) {
         this.modulos = modulos;
     }
 
